@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seven Minute Workout</title>
+  <style>
+    .workout-step {
+      display: none;
+      font-size: 24px;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seven Minute Workout</h1>
+
+  <div id="workout-container">
+    <div class="workout-step" id="step1">
+      <h2>Step 1: Jumping Jacks</h2>
+      <img src="jumping_jacks.png" alt="Jumping Jacks">
+	  <div id="timer1"></div>
+    </div>
+    <div class="workout-step" id="step2">
+      <h2>Step 2: Wall Sit</h2>
+      <img src="wall_sit.png" alt="Wall Sit">
+	  <div id="timer2"></div>
+    </div>
+    <div class="workout-step" id="step3">
+      <h2>Step 3: Push-ups</h2>
+      <img src="push_ups.png" alt="Push-ups">
+    </div>
+    <div class="workout-step" id="step4">
+      <h2>Step 4: Abdominal Crunches</h2>
+      <img src="abdominal_crunches.png" alt="Abdominal Crunches">
+    </div>
+    <div class="workout-step" id="step5">
+      <h2>Step 5: Step-ups</h2>
+      <img src="step_ups.png" alt="Step-ups">
+    </div>
+    <div class="workout-step" id="step6">
+      <h2>Step 6: Squats</h2>
+      <img src="squats.png" alt="Squats">
+    </div>
+    <div class="workout-step" id="step7">
+      <h2>Step 7: Tricep Dips</h2>
+      <img src="tricep_dips.png" alt="Tricep Dips">
+    </div>
+    <div class="workout-step" id="step8">
+      <h2>Step 8: Plank</h2>
+      <img src="plank.png" alt="Plank">
+    </div>
+    <div class="workout-step" id="step9">
+      <h2>Step 9: High Knees</h2>
+      <img src="high_knees.png" alt="High Knees">
+    </div>
+    <div class="workout-step" id="step10">
+      <h2>Step 10: Lunges</h2>
+      <img src="lunges.png" alt="Lunges">
+    </div>
+    <div class="workout-step" id="step11">
+      <h2>Step 11: Push-up with Rotation</h2>
+      <img src="push_up_rotation.png" alt="Push-up with Rotation">
+    </div>
+    <div class="workout-step" id="step12">
+      <h2>Step 12: Side Plank</h2>
+      <img src="side_plank.png" alt="Side Plank">
+    </div>
+  </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const workoutSteps = document.querySelectorAll(".workout-step");
+      const timers = document.querySelectorAll("[id^='timer']");
+      const stepDuration = 30; // Duration for each workout step in seconds
+      let currentStep = 0;
+      let timeLeft = stepDuration;
+
+      function showCurrentStep() {
+        for (let i = 0; i < workoutSteps.length; i++) {
+          workoutSteps[i].style.display = "none";
+        }
+        workoutSteps[currentStep].style.display = "block";
+      }
+
+      function startTimer() {
+        timeLeft = stepDuration;
+        const timer = timers[currentStep];
+        timer.textContent = timeLeft;
+
+        const countdown = setInterval(function() {
+          timeLeft--;
+          timer.textContent = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            switchToNextStep();
+          }
+        }, 1000);
+      }
+
+      function switchToNextStep() {
+        currentStep = (currentStep + 1) % workoutSteps.length;
+        showCurrentStep();
+        startTimer();
+      }
+
+      showCurrentStep();
+      startTimer();
+    });
+  </script>
+</body>
+</html>

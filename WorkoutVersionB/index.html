@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seven Minute Workout</title>
+  <style>
+    body.active {
+      background-color: white;
+      color: black;
+    }
+
+    body.resting {
+      background-color: blue;
+      color: white;
+    }
+
+    .workout-step {
+      display: none;
+      font-size: 24px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .timer-container {
+      font-size: 36px;
+    }
+
+    #start-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seven Minute Workout</h1>
+  <div id="workout-container"></div>
+  <div class="timer-container">
+    <div id="timer"></div>
+    <div id="next-step"></div>
+  </div>
+  <button id="start-button">Start</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
