@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v9</h1>
+  <h1>Seven Minute Workout v10</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -189,8 +189,10 @@
         showCurrentStep();
         startTimer();
 		bellAudio = new sound("bell2.mp3");
+		bellAudio.autoplay = true;
 		
 	    myAudio = new sound("Round1_forty_seconds_v4.mp3");
+		myAudio.autoplay = true;
 		//bellAudio.currentTime = 0;
 		bellAudio.play();
 		//myAudio.currentTime = 0;
