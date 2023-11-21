@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v7</h1>
+  <h1>Seven Minute Workout v8</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -104,7 +104,7 @@
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
   this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
+  //this.sound.style.display = "none";
   document.body.appendChild(this.sound);
   this.play = function(){
     this.sound.play();
