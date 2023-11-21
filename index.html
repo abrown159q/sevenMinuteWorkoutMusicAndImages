@@ -117,16 +117,14 @@
 	//this.sound.currentTime = 
   //}
 }
-	var isTesting = false;
-		var bellAudio = new sound("bell2.mp3");
-		
-		var myAudio = new sound("Round1_forty_seconds.wav");
+	var isTestRun = false;
+
 	
 	var pausedNow = false;
       const workoutSteps = document.querySelectorAll(".workout-step");
       const timers = document.querySelectorAll("[id^='timer']");
-      const stepDuration = 31; // Duration for each workout step in seconds
-      const restDuration = 10; // Duration for rest period between steps in seconds
+      var stepDuration = 31; // Duration for each workout step in seconds
+      var restDuration = 10; // Duration for rest period between steps in seconds
       <!-- const stepDuration = 3; // Duration for each workout step in seconds -->
       <!-- const restDuration = 1; // Duration for rest period between steps in seconds -->
       let currentStep = 0;
@@ -188,6 +186,9 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
+		var bellAudio = new sound("bell2.mp3");
+		
+		var myAudio = new sound("Round1_forty_seconds.wav");
 		bellAudio.currentTime = 0;
 		bellAudio.play();
 		myAudio.currentTime = 0;
@@ -208,7 +209,12 @@
 	function pauseEverything() {
 	 pausedNow = true;
 	}
+	function testRun(){
 	
+	<!-- isTestRun = true; -->
+	       stepDuration = 3; // Duration for each workout step in seconds
+      restDuration = 1; // Duration for rest period between steps in seconds
+	}
   </script>
 </body>
 </html>
