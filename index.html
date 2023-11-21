@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v6</h1>
+  <h1>Seven Minute Workout v7</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -119,6 +119,8 @@
 }
 	var isTestRun = false;
 
+	var bellAudio;
+	var myAudio;
 	
 	var pausedNow = false;
       const workoutSteps = document.querySelectorAll(".workout-step");
@@ -186,9 +188,9 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
-		var bellAudio = new sound("bell2.mp3");
+		bellAudio = new sound("bell2.mp3");
 		
-		var myAudio = new sound("Round1_forty_seconds_v4.mp3");
+	    myAudio = new sound("Round1_forty_seconds_v4.mp3");
 		//bellAudio.currentTime = 0;
 		bellAudio.play();
 		//myAudio.currentTime = 0;
