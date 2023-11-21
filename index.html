@@ -96,7 +96,7 @@
     </div>
   </div>
   </div>
-
+	<button onclick="testRun()">Test app</button>
     <script>
 	  var mySong; 
   function sound(src) {
@@ -112,7 +112,12 @@
   this.stop = function(){
     this.sound.pause();
   }
+  
+ // this.currentTime = function(){
+	//this.sound.currentTime = 
+  //}
 }
+	var isTesting = false;
 		var bellAudio = new sound("bell2.mp3");
 		
 		var myAudio = new sound("Round1_forty_seconds.wav");
