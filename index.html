@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v8</h1>
+  <h1>Seven Minute Workout v9</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -210,6 +210,8 @@
 	
 	function pauseEverything() {
 	 pausedNow = true;
+	 myAudio.stop();
+	 bellAudio.stop();
 	}
 	function testRun(){
 	
