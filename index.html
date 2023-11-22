@@ -107,7 +107,8 @@
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
   this.sound.setAttribute("controls", "none");
-  //this.sound.style.display = "none";
+  this.sound.style.display = "none";
+  this.sound.loop = true;
   document.body.appendChild(this.sound);
   this.play = function(){
     this.sound.play();
@@ -194,8 +195,8 @@
 		bellAudio = new sound("bell2.mp3");
 		bellAudio.autoplay = true;
 		
-	    myAudio = new sound("Round1_forty_seconds_v4.mp3");
-		myAudio.autoplay = true;
+	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
+		//myAudio.autoplay = true;
 		//bellAudio.currentTime = 0;
 		bellAudio.play();
 		//myAudio.currentTime = 0;
@@ -204,6 +205,9 @@
       }
 
 	function startTimerMyFriend(){
+		    myAudio = new sound("Round1_forty_seconds_v4.mp3");
+		myAudio.autoplay = true;
+		myAudio.play();
 	pausedNow = false;
 	showCurrentStep();
       startTimer();
