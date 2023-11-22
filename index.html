@@ -102,13 +102,13 @@
     <script>
 	  var mySong; 
 	  var playSound;
-  function sound(src) {
+  function sound(src, doesLoop) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
   this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
-  this.sound.loop = true;
+  this.sound.loop = doesLoop;
   document.body.appendChild(this.sound);
   this.play = function(){
     this.sound.play();
@@ -192,7 +192,7 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
-		bellAudio = new sound("bell2.mp3");
+		bellAudio = new sound("bell2.mp3", false);
 		bellAudio.autoplay = true;
 		
 	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
@@ -205,7 +205,7 @@
       }
 
 	function startTimerMyFriend(){
-		    myAudio = new sound("Round1_forty_seconds_v4.mp3");
+		myAudio = new sound("Round1_forty_seconds_v4.mp3", true);
 		myAudio.autoplay = true;
 		myAudio.play();
 	pausedNow = false;
