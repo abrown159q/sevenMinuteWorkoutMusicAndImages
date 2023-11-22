@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v13</h1>
+  <h1>Seven Minute Workout v16</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -130,7 +130,7 @@
 	var pausedNow = false;
       const workoutSteps = document.querySelectorAll(".workout-step");
       const timers = document.querySelectorAll("[id^='timer']");
-      var stepDuration = 31; // Duration for each workout step in seconds
+      var stepDuration = 30; // Duration for each workout step in seconds
       var restDuration = 10; // Duration for rest period between steps in seconds
       <!-- const stepDuration = 3; // Duration for each workout step in seconds -->
       <!-- const restDuration = 1; // Duration for rest period between steps in seconds -->
@@ -153,8 +153,8 @@
         timeLeft = isResting ? restDuration : stepDuration;
         const timer = timers[currentStep];
 		if(currentStep == 0 && actualFirst){
-			timer.textContent = 41;
-			timeLeft = 41
+			timer.textContent = 40;
+			timeLeft = 40;
 			actualFirst = false;
 		}else{
 			timer.textContent = timeLeft;
@@ -210,13 +210,11 @@
       }
 
 	function startTimerMyFriend(){
-		myAudio = new sound("Round1_forty_seconds_v5.mp3", true);
+		myAudio = new sound("songAndBell_v4.mp3", true);
 		myAudio.autoplay = true;
 		myAudio.play();
 		
-		bellAudio = new sound("bell2_long.mp3", true);
-		bellAudio.autoplay = true;
-		bellAudio.play();
+
 	
 		pausedNow = false;
 		
