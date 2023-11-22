@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v11</h1>
+  <h1>Seven Minute Workout v13</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -125,6 +125,7 @@
 
 	var bellAudio;
 	var myAudio;
+	var actualFirst = true;
 	
 	var pausedNow = false;
       const workoutSteps = document.querySelectorAll(".workout-step");
@@ -151,8 +152,13 @@
 
         timeLeft = isResting ? restDuration : stepDuration;
         const timer = timers[currentStep];
-        timer.textContent = timeLeft;
-
+		if(currentStep == 0 && actualFirst){
+			timer.textContent = 41;
+			timeLeft = 41
+			actualFirst = false;
+		}else{
+			timer.textContent = timeLeft;
+		}
         const countdown = setInterval(function() {
         timeLeft--;
         timer.textContent = timeLeft;
@@ -192,25 +198,30 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
-		bellAudio = new sound("bell2.mp3", false);
-		bellAudio.autoplay = true;
+
 		
 	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
 		//myAudio.autoplay = true;
 		//bellAudio.currentTime = 0;
-		bellAudio.play();
+		//bellAudio.play();
 		//myAudio.currentTime = 0;
-		myAudio.play();
+		//myAudio.play();
 		}
       }
 
 	function startTimerMyFriend(){
-		myAudio = new sound("Round1_forty_seconds_v4.mp3", true);
+		myAudio = new sound("Round1_forty_seconds_v5.mp3", true);
 		myAudio.autoplay = true;
 		myAudio.play();
-	pausedNow = false;
-	showCurrentStep();
-      startTimer();
+		
+		bellAudio = new sound("bell2_long.mp3", true);
+		bellAudio.autoplay = true;
+		bellAudio.play();
+	
+		pausedNow = false;
+		
+		showCurrentStep();
+		startTimer();
 	}
 		
 	        function onload() {
