@@ -16,11 +16,13 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v18</h1>
+  <h1>Seven Minute Workout v20</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
 	<button onclick="pauseEverything()" id="pauseEverything()">Pause</button>
+	<button onclick="voiceOrNo()" id="voiceOrNo">Voice</button>
+	
   <div id="workout-container">
     <div class="workout-step" id="step0">
       <h2>Step 0: Get ready (Flex and light jog)</h2>
@@ -102,6 +104,7 @@
     <script>
 	  var mySong; 
 	  var playSound;
+	  var voice = true;
   function sound(src, doesLoop) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
@@ -175,7 +178,11 @@
             if (isResting) {
               isResting = false;
               switchToNextStep();
-			  
+			  //speak step name
+			  if(voice){
+			  var step = "Start " + workoutSteps[currentStep].innerHTML.substring(6);
+			  speakStepName(step);
+			  }
 			  document.body.style.backgroundColor = "white";
 			  document.getElementById("workout-container").style.color = "black";
             } else {
@@ -200,9 +207,10 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
+		if(voice){
 		var step = "Next up is " + workoutSteps[currentStep+1].innerHTML;
 		speakStepName(step);
-		
+		}
 	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
 		//myAudio.autoplay = true;
 		//bellAudio.currentTime = 0;
@@ -251,6 +259,16 @@
     const speech = new SpeechSynthesisUtterance(stepName);
     Object.assign(speech, speakOptions);
     speechSynthesis.speak(speech);
+  }
+  
+  function voiceOrNo(){
+	voice = !voice;
+	if(voice)
+	document.getElementById("voiceOrNo").innerHTML = "Voice";
+	else
+	document.getElementById("voiceOrNo").innerHTML = "No voice";
+	
+	
   }
 
   </script>
