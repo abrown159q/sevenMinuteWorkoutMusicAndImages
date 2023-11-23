@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v18</h1>
+  <h1>Seven Minute Workout v16</h1>
   <!-- <p id="tester">test</p> -->
 	<button onclick="startTimerMyFriend()">Start</button>
 	
@@ -127,8 +127,6 @@
 	var myAudio;
 	var actualFirst = true;
 	
-	  const speakOptions = { rate: 1.0, pitch: 1.0, volume: 1.0 };
-	
 	var pausedNow = false;
       const workoutSteps = document.querySelectorAll(".workout-step");
       const timers = document.querySelectorAll("[id^='timer']");
@@ -200,8 +198,7 @@
 	  if(!pausedNow) {
         showCurrentStep();
         startTimer();
-		var step = "Next up is " + workoutSteps[currentStep+1].innerHTML;
-		speakStepName(step);
+
 		
 	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
 		//myAudio.autoplay = true;
@@ -241,18 +238,10 @@
       restDuration = 1; // Duration for rest period between steps in seconds
 	}
 	function testSound(){
-	//	playSound = new sound("Round1_forty_seconds_v4.mp3");
-	//	playSound.play();
-			speakStepName("Hello");
+		playSound = new sound("Round1_forty_seconds_v4.mp3");
+		playSound.play();
 	
 	}
-	
-	function speakStepName(stepName) {
-    const speech = new SpeechSynthesisUtterance(stepName);
-    Object.assign(speech, speakOptions);
-    speechSynthesis.speak(speech);
-  }
-
   </script>
 </body>
 </html>
