@@ -17,7 +17,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v21.b</h1>
+  <h1>Seven Minute Workout v21.c</h1>
 
   <button onclick="startTimerMyFriend()">Start</button>
   <button onclick="pauseEverything()">Pause</button>
@@ -100,129 +100,154 @@
   <button onclick="testRun()">Test app</button>
   <button onclick="testSound()">Test sound</button>
 
-  <script>
-    let voice = true;
-    let pausedNow = false;
-    let actualFirst = true;
-    let currentStep = 0;
-    let timeLeft;
-    let isResting = false;
-    let myAudio, bellAudio;
+ <script>
+  let myAudio;
+  let bellAudio;
+  let playSound;
+  let voice = true;
+  let pausedNow = false;
+  let countdownInterval = null;
+  let isTestRun = false;
+  let actualFirst = true;
 
-    const stepDurationDefault = 30;
-    const restDurationDefault = 10;
-    let stepDuration = stepDurationDefault;
-    let restDuration = restDurationDefault;
+  const speakOptions = { rate: 1.0, pitch: 1.0, volume: 1.0 };
+  const workoutSteps = document.querySelectorAll(".workout-step");
+  const timers = document.querySelectorAll("[id^='timer']");
 
-    const workoutSteps = document.querySelectorAll(".workout-step");
-    const timers = document.querySelectorAll("[id^='timer']");
-    const speakOptions = { rate: 1.0, pitch: 1.0, volume: 1.0 };
+  let stepDuration = 30;
+  let restDuration = 10;
+  let currentStep = 0;
+  let timeLeft = stepDuration;
+  let isResting = false;
 
-    function sound(src, doesLoop) {
-      const audio = document.createElement("audio");
-      audio.src = src;
-      audio.preload = "auto";
-      audio.controls = false;
-      audio.style.display = "none";
-      audio.loop = doesLoop;
-      document.body.appendChild(audio);
-      this.play = () => audio.play();
-      this.pause = () => audio.pause();
-      this.sound = audio;
+  function sound(src, doesLoop) {
+    const audio = document.createElement("audio");
+    audio.src = src;
+    audio.setAttribute("preload", "auto");
+    audio.setAttribute("controls", "none");
+    audio.style.display = "none";
+    audio.loop = doesLoop;
+    document.body.appendChild(audio);
+    this.sound = audio;
+    this.play = () => audio.play();
+    this.pause = () => audio.pause();
+  }
+
+  function showCurrentStep() {
+    workoutSteps.forEach(step => step.style.display = "none");
+    workoutSteps[currentStep].style.display = "block";
+  }
+
+  function startTimer() {
+    if (pausedNow || countdownInterval !== null) return;
+
+    timeLeft = isResting ? restDuration : stepDuration;
+    const timer = timers[currentStep];
+
+    if (currentStep === 0 && actualFirst) {
+      timeLeft = 40;
+      actualFirst = false;
     }
 
-    function showCurrentStep() {
-      workoutSteps.forEach(step => step.style.display = "none");
-      if (currentStep < workoutSteps.length) {
-        workoutSteps[currentStep].style.display = "block";
-      }
-    }
+    timer.textContent = timeLeft;
 
-    function startTimer() {
-      if (pausedNow) return;
-      timeLeft = isResting ? restDuration : stepDuration;
-
-      if (currentStep === 0 && actualFirst) {
-        timeLeft = 40;
-        actualFirst = false;
-      }
-
-      const timer = timers[currentStep];
-      timer.textContent = timeLeft;
-
-      const countdown = setInterval(() => {
-        if (!pausedNow) {
-          timeLeft--;
-          timer.textContent = timeLeft;
-        }
+    countdownInterval = setInterval(() => {
+      if (!pausedNow) {
+        timeLeft--;
+        timer.textContent = timeLeft;
 
         if (timeLeft <= 0) {
-          clearInterval(countdown);
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+
           document.body.style.backgroundColor = "blue";
           document.getElementById("workout-container").style.color = "white";
-          workoutSteps[currentStep].innerHTML = "BREAK! Next: " + workoutSteps[currentStep + 1]?.innerHTML;
+
+          workoutSteps[currentStep].innerHTML =
+            "BREAK! Next: " + workoutSteps[currentStep + 1]?.innerHTML;
 
           if (isResting) {
             isResting = false;
             switchToNextStep();
-            if (voice) speakStepName("Start " + workoutSteps[currentStep].innerText.substring(6));
-            document.body.style.backgroundColor = "white";
-            document.getElementById("workout-container").style.color = "black";
+            if (voice) {
+              speakStepName("Start " + workoutSteps[currentStep].innerText.substring(6));
+            }
+            resetColors();
           } else {
             isResting = true;
             switchToRest();
           }
         }
-      }, 1000);
-    }
+      }
+    }, 1000);
+  }
 
-    function switchToNextStep() {
-      if (pausedNow) return;
-      currentStep = (currentStep + 1) % workoutSteps.length;
-      showCurrentStep();
-      startTimer();
-    }
+  function switchToNextStep() {
+    if (pausedNow) return;
+    currentStep = (currentStep + 1) % workoutSteps.length;
+    showCurrentStep();
+    startTimer();
+  }
 
-    function switchToRest() {
-      if (pausedNow) return;
-      showCurrentStep();
-      startTimer();
-      if (voice) speakStepName("Next up is " + workoutSteps[currentStep + 1]?.innerText);
+  function switchToRest() {
+    if (pausedNow) return;
+    showCurrentStep();
+    startTimer();
+    if (voice) {
+      const nextStepText = workoutSteps[currentStep + 1]?.innerText;
+      speakStepName("Next up is " + nextStepText);
     }
+  }
 
-    function startTimerMyFriend() {
+  function startTimerMyFriend() {
+    if (!myAudio) {
       myAudio = new sound("songAndBell_v4.mp3", true);
-      myAudio.play();
-      pausedNow = false;
-      showCurrentStep();
-      startTimer();
     }
+    myAudio.play();
 
-    function pauseEverything() {
-      pausedNow = true;
-      myAudio?.pause();
-      bellAudio?.pause();
-    }
+    pausedNow = false;
+    actualFirst = true;
+    currentStep = 0;
+    isResting = false;
 
-    function testRun() {
-      stepDuration = 3;
-      restDuration = 1;
-    }
+    showCurrentStep();
+    startTimer();
+  }
 
-    function testSound() {
-      speakStepName("Hello");
-    }
+  function pauseEverything() {
+    pausedNow = true;
+    clearInterval(countdownInterval);
+    countdownInterval = null;
 
-    function speakStepName(text) {
-      const speech = new SpeechSynthesisUtterance(text);
-      Object.assign(speech, speakOptions);
-      speechSynthesis.speak(speech);
-    }
+    if (myAudio) myAudio.pause();
+    if (bellAudio) bellAudio.pause();
+  }
 
-    function voiceOrNo() {
-      voice = !voice;
-      document.getElementById("voiceOrNo").textContent = voice ? "Voice" : "No voice";
-    }
-  </script>
+  function testRun() {
+    stepDuration = 3;
+    restDuration = 1;
+  }
+
+  function testSound() {
+    speakStepName("Hello");
+  }
+
+  function speakStepName(stepName) {
+    const speech = new SpeechSynthesisUtterance(stepName);
+    Object.assign(speech, speakOptions);
+    speechSynthesis.speak(speech);
+  }
+
+  function voiceOrNo() {
+    voice = !voice;
+    document.getElementById("voiceOrNo").innerHTML = voice ? "Voice" : "No voice";
+  }
+
+  function resetColors() {
+    document.body.style.backgroundColor = "white";
+    document.getElementById("workout-container").style.color = "black";
+  }
+</script>
+
 </body>
 </html>
