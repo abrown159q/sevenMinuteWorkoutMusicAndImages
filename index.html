@@ -1,292 +1,228 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Seven Minute Workout</title>
   <style>
-  html {
-  text-align: center;
-  }
+    html {
+      text-align: center;
+      font-family: "Lucida Console", "Courier New", monospace;
+    }
+
     .workout-step {
       display: none;
       font-size: 24px;
-      text-align: center;
       margin-top: 50px;
-	  font-family: "Lucida Console", "Courier New", monospace;
     }
   </style>
 </head>
 <body>
   <h1>Seven Minute Workout v21.a</h1>
-  <!-- <p id="tester">test</p> -->
-	<button onclick="startTimerMyFriend()">Start</button>
-	
-	<button onclick="pauseEverything()" id="pauseEverything()">Pause</button>
-	<button onclick="voiceOrNo()" id="voiceOrNo">Voice</button>
-	
+
+  <button onclick="startTimerMyFriend()">Start</button>
+  <button onclick="pauseEverything()">Pause</button>
+  <button onclick="voiceOrNo()" id="voiceOrNo">Voice</button>
+
   <div id="workout-container">
+    <!-- Workout steps -->
     <div class="workout-step" id="step0">
       <h2>Step 0: Get ready (Flex and light jog)</h2>
-	  <div id="timer0"></div>
+      <div id="timer0"></div>
       <img src="get_ready.png" alt="Get Ready">
     </div>
-	<div class="workout-step" id="step1">
+    <div class="workout-step" id="step1">
       <h2>Step 1: Jumping Jacks</h2>
-	  <div id="timer1"></div>
+      <div id="timer1"></div>
       <img src="jumping_jacks.png" alt="Jumping Jacks">
     </div>
     <div class="workout-step" id="step2">
       <h2>Step 2: Wall Sit</h2>
-	  <div id="timer2"></div>
+      <div id="timer2"></div>
       <img src="wall_sit.png" alt="Wall Sit">
     </div>
     <div class="workout-step" id="step3">
       <h2>Step 3: Push-ups</h2>
-	  <div id="timer3"></div>
+      <div id="timer3"></div>
       <img src="push_ups.png" alt="Push-ups">
     </div>
     <div class="workout-step" id="step4">
       <h2>Step 4: Abdominal Crunches</h2>
-	  <div id="timer4"></div>
+      <div id="timer4"></div>
       <img src="abdominal_crunches.png" alt="Abdominal Crunches">
     </div>
-
     <div class="workout-step" id="step5">
       <h2>Step 5: Step-ups</h2>
-	  <div id="timer5"></div>
+      <div id="timer5"></div>
       <img src="step_ups.png" alt="Step-ups">
-
     </div>
     <div class="workout-step" id="step6">
       <h2>Step 6: Squats</h2>
-	  <div id="timer6"></div>
+      <div id="timer6"></div>
       <img src="squats.png" alt="Squats">
     </div>
     <div class="workout-step" id="step7">
       <h2>Step 7: Tricep Dips</h2>
-	  <div id="timer7"></div>
+      <div id="timer7"></div>
       <img src="tricep_dips.png" alt="Tricep Dips">
     </div>
     <div class="workout-step" id="step8">
       <h2>Step 8: Plank</h2>
-	  <div id="timer8"></div>
+      <div id="timer8"></div>
       <img src="plank.png" alt="Plank">
     </div>
     <div class="workout-step" id="step9">
       <h2>Step 9: High Knees</h2>
-	  <div id="timer9"></div>
+      <div id="timer9"></div>
       <img src="high_knees.png" alt="High Knees">
     </div>
     <div class="workout-step" id="step10">
       <h2>Step 10: Lunges</h2>
-	  <div id="timer10"></div>
+      <div id="timer10"></div>
       <img src="lunges.png" alt="Lunges">
     </div>
     <div class="workout-step" id="step11">
       <h2>Step 11: Push-up with Rotation</h2>
-	  <div id="timer11"></div>
+      <div id="timer11"></div>
       <img src="push_up_rotation.png" alt="Push-up with Rotation">
     </div>
     <div class="workout-step" id="step12">
       <h2>Step 12R: Side Plank Right</h2>
-	  <div id="timer12"></div>
+      <div id="timer12"></div>
       <img src="side_plank.png" alt="Side Plank">
     </div>
-	    <div class="workout-step" id="step13">
+    <div class="workout-step" id="step13">
       <h2>Step 12L: Side Plank Left</h2>
-	  <div id="timer13"></div>
+      <div id="timer13"></div>
       <img src="side_plank.png" alt="Side Plank">
     </div>
   </div>
-  </div>
-	<button onclick="testRun()">Test app</button>
-	<button onclick="testSound()">Test sound</button>
-	
-    <script>
-	  var mySong; 
-	  var playSound;
-	  var voice = true;
-  function sound(src, doesLoop) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  this.sound.loop = doesLoop;
-  document.body.appendChild(this.sound);
-  this.play = function(){
-    this.sound.play();
-  }
-  this.pause = function(){
-    this.sound.pause();
-  }
-  
- // this.currentTime = function(){
-	//this.sound.currentTime = 
-  //}
-}
-	var isTestRun = false;
 
-	var bellAudio;
-	var myAudio;
-	var actualFirst = true;
-	
-	  const speakOptions = { rate: 1.0, pitch: 1.0, volume: 1.0 };
-	
-	var pausedNow = false;
-      const workoutSteps = document.querySelectorAll(".workout-step");
-      const timers = document.querySelectorAll("[id^='timer']");
-      var stepDuration = 30; // Duration for each workout step in seconds
-      var restDuration = 10; // Duration for rest period between steps in seconds
-      <!-- const stepDuration = 3; // Duration for each workout step in seconds -->
-      <!-- const restDuration = 1; // Duration for rest period between steps in seconds -->
-      let currentStep = 0;
-      let timeLeft = stepDuration;
-      let isResting = false;
+  <button onclick="testRun()">Test app</button>
+  <button onclick="testSound()">Test sound</button>
 
-      function showCurrentStep() {
-        for (let i = 0; i < workoutSteps.length; i++) {
-          workoutSteps[i].style.display = "none";
-        }
+  <script>
+    let voice = true;
+    let pausedNow = false;
+    let actualFirst = true;
+    let currentStep = 0;
+    let timeLeft;
+    let isResting = false;
+    let myAudio, bellAudio;
+
+    const stepDurationDefault = 30;
+    const restDurationDefault = 10;
+    let stepDuration = stepDurationDefault;
+    let restDuration = restDurationDefault;
+
+    const workoutSteps = document.querySelectorAll(".workout-step");
+    const timers = document.querySelectorAll("[id^='timer']");
+    const speakOptions = { rate: 1.0, pitch: 1.0, volume: 1.0 };
+
+    function sound(src, doesLoop) {
+      const audio = document.createElement("audio");
+      audio.src = src;
+      audio.preload = "auto";
+      audio.controls = false;
+      audio.style.display = "none";
+      audio.loop = doesLoop;
+      document.body.appendChild(audio);
+      this.play = () => audio.play();
+      this.pause = () => audio.pause();
+      this.sound = audio;
+    }
+
+    function showCurrentStep() {
+      workoutSteps.forEach(step => step.style.display = "none");
+      if (currentStep < workoutSteps.length) {
         workoutSteps[currentStep].style.display = "block";
-		<!-- workoutSteps[currentStep+1].style.display = "block"; -->
-		
+      }
+    }
+
+    function startTimer() {
+      if (pausedNow) return;
+      timeLeft = isResting ? restDuration : stepDuration;
+
+      if (currentStep === 0 && actualFirst) {
+        timeLeft = 40;
+        actualFirst = false;
       }
 
-      function startTimer() {
-	  if(!pausedNow) {
+      const timer = timers[currentStep];
+      timer.textContent = timeLeft;
 
-        timeLeft = isResting ? restDuration : stepDuration;
-        const timer = timers[currentStep];
-		if(currentStep == 0 && actualFirst){
-			timer.textContent = 40;
-			timeLeft = 40;
-			actualFirst = false;
-		}else{
-			timer.textContent = timeLeft;
-		}
-        const countdown = setInterval(function() {
-        if(!pausedNow)
-	{ timeLeft--;
-        timer.textContent = timeLeft;
-	}
+      const countdown = setInterval(() => {
+        if (!pausedNow) {
+          timeLeft--;
+          timer.textContent = timeLeft;
+        }
+
         if (timeLeft <= 0) {
+          clearInterval(countdown);
+          document.body.style.backgroundColor = "blue";
+          document.getElementById("workout-container").style.color = "white";
+          workoutSteps[currentStep].innerHTML = "BREAK! Next: " + workoutSteps[currentStep + 1]?.innerHTML;
 
-			document.body.style.backgroundColor = "blue";
-   		    document.getElementById("workout-container").style.color = "white";
-			workoutSteps[currentStep].innerHTML = "BREAK! Next: " + workoutSteps[currentStep+1].innerHTML;
-			
-            clearInterval(countdown);
-            if (isResting) {
-              isResting = false;
-              switchToNextStep();
-			  //speak step name
-			  if(voice){
-			  var step = "Start " + workoutSteps[currentStep].innerHTML.substring(6);
-			  speakStepName(step);
-			  }
-			  document.body.style.backgroundColor = "white";
-			  document.getElementById("workout-container").style.color = "black";
-            } else {
-              isResting = true;
-              switchToRest();
-            }
+          if (isResting) {
+            isResting = false;
+            switchToNextStep();
+            if (voice) speakStepName("Start " + workoutSteps[currentStep].innerText.substring(6));
+            document.body.style.backgroundColor = "white";
+            document.getElementById("workout-container").style.color = "black";
+          } else {
+            isResting = true;
+            switchToRest();
           }
-        }, 1000);
-		}
-      }
+        }
+      }, 1000);
+    }
 
     function switchToNextStep() {
-	if(!pausedNow) {
-        currentStep = (currentStep + 1) % workoutSteps.length;
-        showCurrentStep();
-        startTimer();
+      if (pausedNow) return;
+      currentStep = (currentStep + 1) % workoutSteps.length;
+      showCurrentStep();
+      startTimer();
+    }
 
-		}
-      }
+    function switchToRest() {
+      if (pausedNow) return;
+      showCurrentStep();
+      startTimer();
+      if (voice) speakStepName("Next up is " + workoutSteps[currentStep + 1]?.innerText);
+    }
 
-      function switchToRest() {
-	  if(!pausedNow) {
-        showCurrentStep();
-        startTimer();
-		if(voice){
-		var step = "Next up is " + workoutSteps[currentStep+1].innerHTML;
-		speakStepName(step);
-		}
-	    //myAudio = new sound("Round1_forty_seconds_v4.mp3");
-		//myAudio.autoplay = true;
-		//bellAudio.currentTime = 0;
-		//bellAudio.play();
-		//myAudio.currentTime = 0;
-		//myAudio.play();
-		}
-      }
+    function startTimerMyFriend() {
+      myAudio = new sound("songAndBell_v4.mp3", true);
+      myAudio.play();
+      pausedNow = false;
+      showCurrentStep();
+      startTimer();
+    }
 
-	function startTimerMyFriend(){
-		myAudio = new sound("songAndBell_v4.mp3", true);
-		myAudio.autoplay = true;
-		myAudio.play();
-		
+    function pauseEverything() {
+      pausedNow = true;
+      myAudio?.pause();
+      bellAudio?.pause();
+    }
 
-	
-		pausedNow = false;
-		
-		showCurrentStep();
-		startTimer();
-	}
-		
-	        function onload() {
-          console.log('Onload called');
-        }
-	
-	function pauseEverything() {
-	 pausedNow = true;
-	 myAudio.pause();
-	 bellAudio.pause();
-	}
-	function testRun(){
-	
-	<!-- isTestRun = true; -->
-	       stepDuration = 3; // Duration for each workout step in seconds
-      restDuration = 1; // Duration for rest period between steps in seconds
-	}
-	function testSound(){
-	//	playSound = new sound("Round1_forty_seconds_v4.mp3");
-	//	playSound.play();
-			speakStepName("Hello");
-	
-	}
-	
-	function speakStepName(stepName) {
-    const speech = new SpeechSynthesisUtterance(stepName);
-    Object.assign(speech, speakOptions);
-    speechSynthesis.speak(speech);
-  }
-  
-  function voiceOrNo(){
-	voice = !voice;
-	if(voice)
-	document.getElementById("voiceOrNo").innerHTML = "Voice";
-	else
-	document.getElementById("voiceOrNo").innerHTML = "No voice";
-	
-	
-  }
+    function testRun() {
+      stepDuration = 3;
+      restDuration = 1;
+    }
 
+    function testSound() {
+      speakStepName("Hello");
+    }
+
+    function speakStepName(text) {
+      const speech = new SpeechSynthesisUtterance(text);
+      Object.assign(speech, speakOptions);
+      speechSynthesis.speak(speech);
+    }
+
+    function voiceOrNo() {
+      voice = !voice;
+      document.getElementById("voiceOrNo").textContent = voice ? "Voice" : "No voice";
+    }
   </script>
-	<p>Step 0: Get ready (Flex and light jog)</p>
-	<p>Step 1: Jumping Jacks
-	<p>Step 2: Wall Sit
-	<p>Step 3: Push-ups 
-	<p>Step 4: Abdominal Crunches 
-	<p>Step 5: Step-ups 
-	<p>Step 6: Squats 
-	<p>Step 7: Tricep Dips 
-	<p>Step 8: Plank 
-	<p>Step 9: High Knees 
-	<p>Step 10: Lunges 
-	<p>Step 11: Push-up with Rotation 
-	<p>Step 12R: Side Plank Right 
-	<p>Step 12L: Side Plank Left
-	
 </body>
 </html>
