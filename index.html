@@ -17,7 +17,7 @@
   </style>
 </head>
 <body>
-  <h1>Seven Minute Workout v21.c</h1>
+  <h1>Seven Minute Workout v21.d</h1>
 
   <button onclick="startTimerMyFriend()">Start</button>
   <button onclick="pauseEverything()">Pause</button>
@@ -200,18 +200,24 @@
   }
 
   function startTimerMyFriend() {
-    if (!myAudio) {
+    if(actualFirst)
+    {  if (!myAudio) {
       myAudio = new sound("songAndBell_v4.mp3", true);
+      
+    }
+         currentStep = 0;
     }
     myAudio.play();
 
     pausedNow = false;
-    actualFirst = true;
-    currentStep = 0;
+    //actualFirst = true;
+
     isResting = false;
 
     showCurrentStep();
     startTimer();
+
+    
   }
 
   function pauseEverything() {
@@ -248,6 +254,19 @@
     document.getElementById("workout-container").style.color = "black";
   }
 </script>
-
+<p>Step 0: Get ready (Flex and light jog)</p>
+ 	<p>Step 1: Jumping Jacks
+ 	<p>Step 2: Wall Sit
+ 	<p>Step 3: Push-ups 
+ 	<p>Step 4: Abdominal Crunches 
+ 	<p>Step 5: Step-ups 
+ 	<p>Step 6: Squats 
+ 	<p>Step 7: Tricep Dips 
+ 	<p>Step 8: Plank 
+ 	<p>Step 9: High Knees 
+ 	<p>Step 10: Lunges 
+ 	<p>Step 11: Push-up with Rotation 
+ 	<p>Step 12R: Side Plank Right 
+ 	<p>Step 12L: Side Plank Left
 </body>
 </html>
